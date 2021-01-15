@@ -1,5 +1,8 @@
 # 샤이니 컬러즈 카드 이름 생성기
 
+<img src="https://raw.githubusercontent.com/PortalCube/shany-card-name-genarator/main/title_en.png"></img>
+<img src="https://raw.githubusercontent.com/PortalCube/shany-card-name-genarator/main/title_ko.png"></img>
+
 아이돌마스터 샤이니 컬러즈 아이돌 카드 이름을 제작하는 도구입니다.
 
 Node.js에서 puppeteer의 스크린샷 캡쳐 기능을 활용하여, CSS와 SVG를 삽입한 HTML 페이지를 캡쳐하고 저장하는 방식으로 작동합니다.
