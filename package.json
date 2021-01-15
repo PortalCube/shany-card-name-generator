@@ -1,5 +1,5 @@
 {
-    "name": "shany-card-title-genarator",
+    "name": "shany-card-name-genarator",
     "version": "1.0.0",
     "description": "아이돌마스터 샤이니 컬러즈 카드 타이틀 생성기",
     "main": "index.js",
