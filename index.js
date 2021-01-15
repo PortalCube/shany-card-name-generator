@@ -71,7 +71,7 @@ async function GenerateImageList(data, name) {
 
     async function GetImage(item) {
         await page.evaluate((item) => {
-            const rarity = ["r", "r", "sr", "ssr"];
+            const rarity = ["n", "r", "sr", "ssr"];
             SetText(item.card_name, item.idol_name, rarity[item.rarity - 1]);
         }, item);
 
