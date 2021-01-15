@@ -14,6 +14,8 @@ Node.js에서 puppeteer의 스크린샷 캡쳐 기능을 활용하여, CSS와 SV
 1. Node.js가 없다면 설치합니다. https://nodejs.org/en/
 1. 저장소를 다운로드합니다.
 1. 저장소 디렉토리 (index.js가 있는 곳) 에서 터미널을 열고 "npm i" 커맨드를 이용해서 모든 패키지를 설치합니다.
+1. 고산자체가 없다면 설치합니다: http://map.ngii.go.kr/mi/emapMain/emapIntro01.do
+1. 나눔 고딕이 없다면 설치합니다: https://hangeul.naver.com/2017/nanum
 
 ### Normal Build
 
