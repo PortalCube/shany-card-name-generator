@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>shany-card-title-genarator</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            body {
+                /* background-color: black; */
+            }
+
+            .wrapper {
+                width: 444px;
+                height: 198px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-image: url("image/ssr.png");
+            }
+
+            .context {
+                width: 100%;
+                margin: 20px;
+            }
+
+            code {
+                padding: 3px;
+                border-radius: 3px;
+                background-color: lightgray;
+                color: maroon;
+            }
+
+            .card {
+                /* Card name style */
+                font-family: "나눔고딕";
+                font-weight: 800;
+                font-size: 20pt;
+                transform: scale(0.9, 1) translateX(10%);
+            }
+
+            .idol {
+                /* Idol name style */
+                font-family: "Gosanja";
+                font-size: 32pt;
+                letter-spacing: -2px;
+                transform: scale(1, 1.1);
+            }
+
+            .first {
+                /* First large letter style */
+                font-size: 44pt;
+            }
+
+            .after {
+                /* Other large letter style */
+                font-size: 38pt;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <svg
+                width="444"
+                height="198"
+                viewBox="0 0 444 198"
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.1"
+            >
+                <defs>
+                    <linearGradient id="ssr" x1="10%" x2="90%" y1="0%" y2="100%">
+                        <stop offset="20%" stop-color="#ff9c30" />
+                        <stop offset="50%" stop-color="#c164f7" />
+                        <stop offset="80%" stop-color="#1e9ef6" />
+                    </linearGradient>
+                    <linearGradient id="sr" x1="10%" x2="90%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#fe8a00" />
+                        <stop offset="100%" stop-color="#e16600" />
+                    </linearGradient>
+                    <linearGradient id="r" x1="10%" x2="90%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#928ac6" />
+                        <stop offset="100%" stop-color="#4a528c" />
+                    </linearGradient>
+                    <linearGradient id="outline-ssr" x1="10%" x2="90%" y1="0%" y2="100%">
+                        <stop offset="20%" stop-color="#ffe372" />
+                        <stop offset="50%" stop-color="#f387e3" />
+                        <stop offset="80%" stop-color="#6bd6fe" />
+                    </linearGradient>
+                    <linearGradient id="outline-sr" x1="0" x2="0%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ffc320" />
+                        <stop offset="100%" stop-color="#ff8d1e" />
+                    </linearGradient>
+                    <linearGradient id="outline-r" x1="0" x2="0%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#dbd2fb" />
+                        <stop offset="100%" stop-color="#6174b4" />
+                    </linearGradient>
+                    <filter
+                        id="drop-shadow"
+                        filterUnits="objectBoundingBox"
+                        x="-10%"
+                        y="-10%"
+                        width="150%"
+                        height="150%"
+                    >
+                        <feGaussianBlur
+                            in="SourceAlpha"
+                            stdDeviation="0.9"
+                            result="blur"
+                        />
+                        <feComponentTransfer in="blur" result="opacityBlurOffset">
+                            <feFuncA
+                                type="table"
+                                tableValues="0 .8 .8 .8 .8 .8 .8 .8 .8"
+                            />
+                        </feComponentTransfer>
+                        <feComponentTransfer in="opacityBlurOffset" result="alphaBlur">
+                            <feFuncA type="linear" slope="0.7" />
+                        </feComponentTransfer>
+                        <feOffset in="alphaBlur" dx="3" dy="4" result="offsetBlur" />
+                        <feMerge>
+                            <feMergeNode in="offsetBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <g
+                    fill="#FFFFFF"
+                    paint-order="stroke"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    id="text-box"
+                    class="text-box"
+                >
+                    <text
+                        text-anchor="end"
+                        stroke-width="6"
+                        x="444"
+                        y="35"
+                        class="card"
+                    ></text>
+                    <text
+                        text-anchor="end"
+                        stroke-width="6"
+                        x="444"
+                        y="90"
+                        class="idol"
+                    ></text>
+                </g>
+            </svg>
+        </div>
+        <div class="context">
+            <p>
+                Press F12 to open Console, and type
+                <code>SetText("{Card Name}", "{Idol Name}", "{Rarity}");</code>
+            </p>
+            <p>Rarity: ssr, sr, r</p>
+        </div>
+        <script>
+            const $ = document.querySelectorAll.bind(document);
+
+            function CloneNode() {
+                const textBox = $(".text-box")[0];
+                const outlineTextBox = textBox.cloneNode(true);
+                outlineTextBox.classList.add("outline");
+
+                outlineTextBox.setAttribute("filter", "url(#drop-shadow)");
+                outlineTextBox.setAttribute("id", "outline-text-box");
+
+                outlineTextBox.querySelector(".card").setAttribute("stroke-width", 10);
+                outlineTextBox.querySelector(".idol").setAttribute("stroke-width", 10);
+
+                $("svg")[0].insertBefore(outlineTextBox, $("svg")[0].children[1]);
+            }
+
+            function SetText(card, idol, rarity) {
+                const cardText = $(".card");
+                const idolText = $(".idol");
+
+                cardText.forEach((item) => {
+                    item.textContent = card;
+                });
+
+                idolText.forEach((item) => {
+                    let nameTexts = idol.split(" ");
+                    let isFirst = true;
+
+                    item.textContent = "";
+
+                    for (let text of nameTexts) {
+                        let textArray = text.split("");
+                        let first = textArray.shift();
+                        let firstElement = document.createElementNS(
+                            "http://www.w3.org/2000/svg",
+                            "tspan"
+                        );
+
+                        firstElement.textContent = first;
+
+                        if (isFirst) {
+                            isFirst = false;
+                            firstElement.classList.add("first");
+                        } else {
+                            firstElement.classList.add("after");
+                        }
+
+                        item.append(firstElement);
+                        item.append(textArray.join("") + " ");
+                    }
+                });
+
+                UpdateRarity(rarity);
+                UpdateTransform();
+            }
+
+            function UpdateTransform() {
+                const element = $(".text-box");
+                const imageSize = [444, 198];
+                const offset = [30, 0];
+                const divide = [-2, 2];
+
+                // NOTE: Text width must less than 320.
+                // Exceeding more than that may cause problems on some area in game.
+                element.forEach((item) => {
+                    let textSize = [
+                        Math.max(item.getBBox().width, 260),
+                        item.getBBox().height
+                    ];
+                    const translate = [0, 1].map(
+                        (i) => (imageSize[i] - offset[i] - textSize[i]) / divide[i]
+                    );
+                    item.style.transform = `translate(${translate[0]}px, ${translate[1]}px) skew(-5deg, -3deg)`;
+                });
+            }
+
+            function UpdateRarity(rarity) {
+                $(".wrapper")[0].style.backgroundImage = `url("image/${rarity}.png")`;
+                $("#text-box")[0].setAttribute("stroke", `url(#${rarity})`);
+                $("#outline-text-box")[0].setAttribute(
+                    "stroke",
+                    `url(#outline-${rarity})`
+                );
+            }
+
+            CloneNode();
+            SetText("Shinycolors Card Name", "Genarator Tool", "ssr");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+{
+    "name": "shany-card-title-genarator",
+    "version": "1.0.0",
+    "description": "아이돌마스터 샤이니 컬러즈 카드 타이틀 생성기",
+    "main": "index.js",
+    "scripts": {
+        "normal": "cross-env MODE=normal node ./index.js",
+        "simple": "cross-env MODE=simple node ./index.js"
+    },
+    "author": "PortalCube",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "chalk": "^4.1.0",
+        "log-update": "^4.0.0",
+        "papaparse": "^5.3.0",
+        "puppeteer": "^5.5.0",
+        "sharp": "^0.27.0"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3"
+    }
+}
