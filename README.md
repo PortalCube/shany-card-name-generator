@@ -1,5 +1,5 @@
-<img src="https://raw.githubusercontent.com/PortalCube/shany-card-name-genarator/main/title_en.png"></img>
-<img src="https://raw.githubusercontent.com/PortalCube/shany-card-name-genarator/main/title_ko.png"></img>
+<img src="https://raw.githubusercontent.com/PortalCube/shany-card-name-generator/main/title_en.png"></img>
+<img src="https://raw.githubusercontent.com/PortalCube/shany-card-name-generator/main/title_ko.png"></img>
 
 # 샤이니 컬러즈 카드 이름 생성기
 
