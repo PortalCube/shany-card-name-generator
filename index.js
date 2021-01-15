@@ -3,6 +3,7 @@ const util = require("util");
 const fs = require("fs");
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+const mkdir = util.promisify(fs.mkdir);
 const Papa = require("papaparse");
 const sharp = require("sharp");
 const puppeteer = require("puppeteer");
@@ -22,6 +23,12 @@ async function Start(mode, namePrefix) {
         ProcessLog(mode.charAt(0).toUpperCase() + mode.slice(1)),
         16
     );
+
+    try {
+        await mkdir("./result");
+    } catch (err) {
+        if (err.code !== "EEXIST") throw err;
+    }
 
     totalCount = data.length;
     latestFiles.length = 10;
