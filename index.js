@@ -123,8 +123,8 @@ function Capitalize(text) {
 
 function ProcessLog(mode) {
     return () => {
-        const percentage = doneCount / totalCount;
-        const percentageString = (percentage * 100).toLocaleString("en-US", {
+        const percent = doneCount / totalCount;
+        const percentString = (percent * 100).toLocaleString("en-US", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         });
@@ -136,7 +136,7 @@ function ProcessLog(mode) {
                 "",
                 chalk.yellow(`Processing... (${doneCount}/${totalCount})`),
                 chalk.yellowBright(`Estimate: ${GetEstimatedTime()}`),
-                chalk.yellow(`${GetProgressBar(percentage, 20)} ${percentageString}%`),
+                chalk.yellow(`${GetProgressBar(percent, 20)} ${percentString}%`),
                 ""
             ].join("\n")
         );
