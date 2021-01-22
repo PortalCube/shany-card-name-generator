@@ -34,20 +34,6 @@ async function Start(mode, preifx, directory = "result") {
     return data;
 }
 
-async function GetCSVData(file) {
-    return Papa.parse(await readFile(file, { encoding: "utf8" }), {
-        header: true
-    }).data;
-}
-
-async function MakeDirectory(directory) {
-    try {
-        await mkdir(`./${directory}`);
-    } catch (err) {
-        if (err.code !== "EEXIST") throw err;
-    }
-}
-
 async function CreateCSV(data, prefix, name = "image") {
     const result = [];
     const directory = {
@@ -100,6 +86,42 @@ async function GenerateImage(data, name = "", directory) {
     await browser.close();
 }
 
+function ProcessLog(mode) {
+    return () => {
+        const percent = doneCount / totalCount;
+        const percentString = (percent * 100).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        logUpdate(
+            [
+                chalk.blueBright(`Mode: ${Capitalize(mode)}`),
+                ...latestFiles.slice(-10),
+                "",
+                chalk.yellow(`Processing... (${doneCount}/${totalCount})`),
+                chalk.yellowBright(`Estimate: ${GetEstimatedTime()}`),
+                chalk.yellow(`${GetProgressBar(percent, 20)} ${percentString}%`),
+                ""
+            ].join("\n")
+        );
+    };
+}
+
+async function GetCSVData(file) {
+    return Papa.parse(await readFile(file, { encoding: "utf8" }), {
+        header: true
+    }).data;
+}
+
+async function MakeDirectory(directory) {
+    try {
+        await mkdir(`./${directory}`);
+    } catch (err) {
+        if (err.code !== "EEXIST") throw err;
+    }
+}
+
 function GetProgressBar(percentage, length) {
     const count = Math.floor(percentage * length);
     const result = [];
@@ -126,28 +148,6 @@ function GetEstimatedTime() {
 
 function Capitalize(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-function ProcessLog(mode) {
-    return () => {
-        const percent = doneCount / totalCount;
-        const percentString = (percent * 100).toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-
-        logUpdate(
-            [
-                chalk.blueBright(`Mode: ${Capitalize(mode)}`),
-                ...latestFiles.slice(-10),
-                "",
-                chalk.yellow(`Processing... (${doneCount}/${totalCount})`),
-                chalk.yellowBright(`Estimate: ${GetEstimatedTime()}`),
-                chalk.yellow(`${GetProgressBar(percent, 20)} ${percentString}%`),
-                ""
-            ].join("\n")
-        );
-    };
 }
 
 (async function () {
