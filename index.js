@@ -144,6 +144,7 @@ function ProcessLog(mode) {
 
 (async function () {
     const mode = process.env.MODE;
+    const namePrefix = "card_name_";
 
     if (mode === undefined) {
         console.error(
@@ -153,10 +154,13 @@ function ProcessLog(mode) {
 
     switch (mode) {
         case "normal":
-            await Start("normal", "card_name_");
+            await Start("normal", namePrefix);
             break;
         case "simple":
             await Start("simple", "");
+            break;
+        case "simple":
+            await Start("update", namePrefix);
             break;
         default:
             console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
