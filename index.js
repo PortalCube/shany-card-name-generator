@@ -21,7 +21,7 @@ let doneCount = 0;
 let timerID = 0;
 
 async function Start(mode, prefix, directory = "result") {
-    const data = await GetCSVData(`data-${mode}.csv`);
+    const data = await ReadCSV(`data-${mode}.csv`);
 
     await MakeDirectory(directory);
 
@@ -32,7 +32,36 @@ async function Start(mode, prefix, directory = "result") {
     return data;
 }
 
-async function CreateCSV(data, prefix, name = "image") {
+async function GetUpdateData() {
+    const oldData = await ReadCSV(`data-old.csv`);
+    const newData = await ReadCSV(`data-normal.csv`);
+
+    const image = [];
+    const csv = [];
+
+    const updateInfoList = [
+        ["id", image],
+        ["id", csv],
+        ["hash", csv],
+        ["version", csv],
+        ["type", csv],
+        ["rarity", image],
+        ["card_name", image],
+        ["idol_name", image]
+    ];
+
+    for (let item of newData) {
+        for (let [key, list] of updateInfoList) {
+            if (Find(oldData, key, item[key]) === undefined) {
+                list.push(item);
+            }
+        }
+    }
+
+    return { image, csv, newData };
+}
+
+async function CreateTranslationCSV(data, prefix, name = "image") {
     const directory = {
         produce: "images/content/idols/name/",
         support: "images/content/support_idols/name/"
@@ -40,15 +69,13 @@ async function CreateCSV(data, prefix, name = "image") {
 
     console.log(chalk.blueBright(`Create ${name}.csv...`));
 
-    await writeFile(
-        `${name}.csv`,
-        Papa.unparse(
-            data.map((item) => [
-                `${directory[item.type]}${item.hash}_${item.id}.png`,
-                `${prefix}${item.id}.png`,
-                item.version
-            ])
-        )
+    await WriteCSV(
+        name,
+        data.map((item) => [
+            `${directory[item.type]}${item.hash}_${item.id}.png`,
+            `${prefix}${item.id}.png`,
+            item.version
+        ])
     );
 }
 
@@ -120,10 +147,14 @@ function EndLog() {
     logUpdate.done();
 }
 
-async function GetCSVData(file) {
+async function ReadCSV(file) {
     return Papa.parse(await readFile(file, { encoding: "utf8" }), {
         header: true
     }).data;
+}
+
+async function WriteCSV(file, data) {
+    await writeFile(`${file}.csv`, Papa.unparse(data));
 }
 
 async function MakeDirectory(directory) {
@@ -158,6 +189,10 @@ function GetEstimatedTime() {
     }
 }
 
+function Find(array, key, value) {
+    return array.filter((item) => item[key] === value)[0];
+}
+
 function Capitalize(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
@@ -170,22 +205,33 @@ function Capitalize(text) {
         console.error(
             chalk.bgRed("ERROR: You need to run this tool with 'npm run <command>'.")
         );
+        return;
+    } else if (!["normal", "simple", "update"].includes(mode)) {
+        console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
+        return;
     }
 
     switch (mode) {
         case "normal":
             const data = await Start("normal", prefix);
-            await CreateCSV(data, prefix);
+            await CreateTranslationCSV(data, prefix);
             break;
         case "simple":
             await Start("simple", "");
             break;
         case "update":
-            await Start("update", prefix);
+            let { image, csv, newData } = await GetUpdateData();
+
+            await MakeDirectory("result_update");
+
+            StartLog(mode, image.length);
+            await GenerateImage(image, prefix, "result_update");
+            EndLog();
+
+            await CreateTranslationCSV(csv, prefix, "image_update");
+            await WriteCSV("data-old", newData);
+
             break;
-        default:
-            console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
-            return;
     }
 
     console.log(chalk.green("Complete! Check the 'result' directory."));
