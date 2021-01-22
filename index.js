@@ -16,9 +16,12 @@ let latestFiles = [];
 let totalCount = 0;
 let doneCount = 0;
 
+let timerID = 0;
+
 async function Start(mode, preifx, directory = "result") {
     const data = await GetCSVData(`data-${mode}.csv`);
-    const timer = setInterval(ProcessLog(mode), 16);
+
+    StartLog(mode);
 
     await MakeDirectory(directory);
 
@@ -28,8 +31,7 @@ async function Start(mode, preifx, directory = "result") {
 
     await GenerateImage(data, preifx, directory);
 
-    clearInterval(timer);
-    logUpdate.done();
+    EndLog();
 
     return data;
 }
@@ -106,6 +108,15 @@ function ProcessLog(mode) {
             ].join("\n")
         );
     };
+}
+
+function StartLog(mode) {
+    timerID = setInterval(ProcessLog(mode), 16);
+}
+
+function EndLog() {
+    clearInterval(timerID);
+    logUpdate.done();
 }
 
 async function GetCSVData(file) {
