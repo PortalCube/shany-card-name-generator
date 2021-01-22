@@ -209,17 +209,8 @@ function Capitalize(text) {
             csvFileName: "image-update"
         }
     }[mode];
-    let csv, image, newData;
 
-    if (mode === undefined) {
-        console.error(
-            chalk.bgRed("ERROR: You need to run this tool with 'npm run <command>'.")
-        );
-        return;
-    } else if (!["normal", "simple", "update"].includes(mode)) {
-        console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
-        return;
-    }
+    let csv, image, newData;
 
     switch (mode) {
         case "normal":
@@ -231,6 +222,17 @@ function Capitalize(text) {
         case "update":
             ({ image, csv, newData } = await GetUpdateData());
             break;
+        default:
+            if (mode === undefined) {
+                console.error(
+                    chalk.bgRed(
+                        "ERROR: You need to run this tool with 'npm run <command>'."
+                    )
+                );
+            } else {
+                console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
+            }
+            return;
     }
 
     if (image) {
