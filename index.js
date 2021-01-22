@@ -157,7 +157,7 @@ function ProcessLog(mode) {
         case "simple":
             await Start("simple", "");
             break;
-        case "simple":
+        case "update":
             await Start("update", namePrefix);
             break;
         default:
