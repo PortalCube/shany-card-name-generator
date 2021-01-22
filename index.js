@@ -34,7 +34,7 @@ async function Start(mode, namePrefix) {
     latestFiles.length = 10;
     latestFiles.fill("");
 
-    await GenerateImageList(data, namePrefix);
+    await GenerateImage(data, namePrefix);
 
     clearInterval(timer);
     logUpdate.done();
@@ -62,7 +62,7 @@ async function NormalMode(data) {
     await writeFile("image.csv", Papa.unparse(resultData));
 }
 
-async function GenerateImageList(data, name) {
+async function GenerateImage(data, name = "", directory = "result") {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -83,7 +83,7 @@ async function GenerateImageList(data, name) {
         // Create image as 2x size, and resize it into 1x size.
         // I chose this way, because Puppeteer is create quite dirty image when I create 1x size image.
         // This way spend more time (about 10 ~ 20%) but create much better images :)
-        await sharp(buffer).resize(444, 198).toFile(`result/${name}${item.id}.png`);
+        await sharp(buffer).resize(444, 198).toFile(`${directory}/${name}${item.id}.png`);
     }
 
     for (let item of data) {
