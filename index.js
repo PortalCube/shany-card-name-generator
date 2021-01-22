@@ -33,7 +33,6 @@ async function Start(mode, preifx, directory = "result") {
 }
 
 async function CreateCSV(data, prefix, name = "image") {
-    const result = [];
     const directory = {
         produce: "images/content/idols/name/",
         support: "images/content/support_idols/name/"
@@ -41,13 +40,16 @@ async function CreateCSV(data, prefix, name = "image") {
 
     console.log(chalk.blueBright(`Create ${name}.csv...`));
 
-    result = data.map((item) => [
-        `${directory[item.type]}${item.hash}_${item.id}.png`,
-        `${prefix}${item.id}.png`,
-        item.version
-    ]);
-
-    await writeFile(`${name}.csv`, Papa.unparse(result));
+    await writeFile(
+        `${name}.csv`,
+        Papa.unparse(
+            data.map((item) => [
+                `${directory[item.type]}${item.hash}_${item.id}.png`,
+                `${prefix}${item.id}.png`,
+                item.version
+            ])
+        )
+    );
 }
 
 async function GenerateImage(data, name = "", directory) {
