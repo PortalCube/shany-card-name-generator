@@ -17,8 +17,7 @@ let totalCount = 0;
 let doneCount = 0;
 
 async function Start(mode, preifx, directory = "result") {
-    const rawData = await readFile(`data-${mode}.csv`, { encoding: "utf8" });
-    const data = Papa.parse(rawData, { header: true }).data;
+    const data = await GetCSVData(`data-${mode}.csv`);
     const timer = setInterval(ProcessLog(mode), 16);
 
     await MakeDirectory(directory);
@@ -33,6 +32,12 @@ async function Start(mode, preifx, directory = "result") {
     logUpdate.done();
 
     return data;
+}
+
+async function GetCSVData(file) {
+    return Papa.parse(await readFile(file, { encoding: "utf8" }), {
+        header: true
+    }).data;
 }
 
 async function MakeDirectory(directory) {
