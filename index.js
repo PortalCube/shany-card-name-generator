@@ -3,6 +3,7 @@ const util = require("util");
 const fs = require("fs");
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+const rmdir = util.promisify(fs.rmdir);
 const mkdir = util.promisify(fs.mkdir);
 const Papa = require("papaparse");
 const sharp = require("sharp");
@@ -150,6 +151,7 @@ async function WriteCSV(file, data) {
 
 async function MakeDirectory(directory) {
     try {
+        await rmdir(`./${directory}`, { recursive: true });
         await mkdir(`./${directory}`);
     } catch (err) {
         if (err.code !== "EEXIST") throw err;
