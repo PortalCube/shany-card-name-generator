@@ -19,10 +19,7 @@ let doneCount = 0;
 async function Start(mode, namePrefix) {
     const rawData = await readFile(`data-${mode}.csv`, { encoding: "utf8" });
     const data = Papa.parse(rawData, { header: true }).data;
-    const timer = setInterval(
-        ProcessLog(mode.charAt(0).toUpperCase() + mode.slice(1)),
-        16
-    );
+    const timer = setInterval(ProcessLog(mode), 16);
 
     try {
         await mkdir("./result");
@@ -120,6 +117,10 @@ function GetEstimatedTime() {
     }
 }
 
+function Capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 function ProcessLog(mode) {
     return () => {
         const percentage = doneCount / totalCount;
@@ -130,7 +131,7 @@ function ProcessLog(mode) {
 
         logUpdate(
             [
-                chalk.blueBright(`Mode: ${mode}`),
+                chalk.blueBright(`Mode: ${Capitalize(mode)}`),
                 ...latestFiles.slice(-10),
                 "",
                 chalk.yellow(`Processing... (${doneCount}/${totalCount})`),
