@@ -20,13 +20,13 @@ let doneCount = 0;
 
 let timerID = 0;
 
-async function Start(mode, preifx, directory = "result") {
+async function Start(mode, prefix, directory = "result") {
     const data = await GetCSVData(`data-${mode}.csv`);
 
     await MakeDirectory(directory);
 
     StartLog(mode, data.length);
-    await GenerateImage(data, preifx, directory);
+    await GenerateImage(data, prefix, directory);
     EndLog();
 
     return data;
