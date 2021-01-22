@@ -193,17 +193,17 @@ function Capitalize(text) {
     const setting = {
         normal: {
             prefix: "card_name_",
-            directory: "result",
+            directory: "result-normal",
             csvFileName: "image"
         },
         simple: {
             prefix: "",
-            directory: "result",
+            directory: "result-simple",
             csvFileName: ""
         },
         update: {
             prefix: "card_name_",
-            directory: "result_update",
+            directory: "result-update",
             csvFileName: "image-update"
         }
     }[mode];
@@ -247,5 +247,5 @@ function Capitalize(text) {
         await WriteCSV("data-normal", newData);
     }
 
-    console.log(chalk.green("Complete! Check the 'result' directory."));
+    console.log(chalk.green(`Complete! Check the '${setting.directory}' directory.`));
 })();
