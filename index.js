@@ -10,7 +10,9 @@ const puppeteer = require("puppeteer");
 const logUpdate = require("log-update");
 const chalk = require("chalk");
 
-let time = 0;
+const LOG_FILE_LIMIT = 10;
+
+let elapsedTime = 0;
 
 let latestFiles = [];
 let totalCount = 0;
@@ -21,16 +23,10 @@ let timerID = 0;
 async function Start(mode, preifx, directory = "result") {
     const data = await GetCSVData(`data-${mode}.csv`);
 
-    StartLog(mode);
-
     await MakeDirectory(directory);
 
-    totalCount = data.length;
-    latestFiles.length = 10;
-    latestFiles.fill("");
-
+    StartLog(mode, data.length);
     await GenerateImage(data, preifx, directory);
-
     EndLog();
 
     return data;
@@ -81,7 +77,7 @@ async function GenerateImage(data, name = "", directory) {
     for (let item of data) {
         const start = new Date();
         await GetImage(item);
-        time += new Date() - start;
+        elapsedTime += new Date() - start;
         latestFiles.push(`${++doneCount}. [${item.card_name}] ${item.idol_name}`);
     }
 
@@ -99,7 +95,7 @@ function ProcessLog(mode) {
         logUpdate(
             [
                 chalk.blueBright(`Mode: ${Capitalize(mode)}`),
-                ...latestFiles.slice(-10),
+                ...latestFiles.slice(-LOG_FILE_LIMIT),
                 "",
                 chalk.yellow(`Processing... (${doneCount}/${totalCount})`),
                 chalk.yellowBright(`Estimate: ${GetEstimatedTime()}`),
@@ -110,7 +106,10 @@ function ProcessLog(mode) {
     };
 }
 
-function StartLog(mode) {
+function StartLog(mode, total) {
+    totalCount = total;
+    latestFiles.length = LOG_FILE_LIMIT;
+    latestFiles.fill("");
     timerID = setInterval(ProcessLog(mode), 16);
 }
 
@@ -147,10 +146,10 @@ function GetProgressBar(percentage, length) {
 }
 
 function GetEstimatedTime() {
-    if (time === 0 || doneCount === 0) {
+    if (elapsedTime === 0 || doneCount === 0) {
         return "";
     } else {
-        const average = time / doneCount;
+        const average = elapsedTime / doneCount;
         const left = totalCount - doneCount;
         const estimate = Math.round((average * left) / 1000);
         return `${Math.floor(estimate / 60)}m ${estimate % 60}s`;
