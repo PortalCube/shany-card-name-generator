@@ -39,25 +39,27 @@ async function Start(mode, namePrefix) {
     clearInterval(timer);
     logUpdate.done();
 
-    if (mode === "normal") {
-        console.log(chalk.blueBright("Create image.csv..."));
+    return data;
+}
 
-        const resultData = [];
-        const directory = {
-            produce: "images/content/idols/name/",
-            support: "images/content/support_idols/name/"
-        };
+async function NormalMode(data) {
+    const resultData = [];
+    const directory = {
+        produce: "images/content/idols/name/",
+        support: "images/content/support_idols/name/"
+    };
 
-        for (let item of data) {
-            resultData.push([
-                `${directory[item.type]}${item.hash}_${item.id}.png`,
-                `${namePrefix}${item.id}.png`,
-                item.version
-            ]);
-        }
+    console.log(chalk.blueBright("Create image.csv..."));
 
-        await writeFile("image.csv", Papa.unparse(resultData));
+    for (let item of data) {
+        resultData.push([
+            `${directory[item.type]}${item.hash}_${item.id}.png`,
+            `${namePrefix}${item.id}.png`,
+            item.version
+        ]);
     }
+
+    await writeFile("image.csv", Papa.unparse(resultData));
 }
 
 async function GenerateImageList(data, name) {
@@ -152,7 +154,8 @@ function ProcessLog(mode) {
 
     switch (mode) {
         case "normal":
-            await Start("normal", namePrefix);
+            const data = await Start("normal", namePrefix);
+            await NormalMode(data);
             break;
         case "simple":
             await Start("simple", "");
