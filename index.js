@@ -52,7 +52,10 @@ async function GetUpdateData() {
 
     for (let item of newData) {
         for (let [key, list] of updateInfoList) {
-            if (Find(oldData, key, item[key]) === undefined) {
+            if (
+                Find(oldData, key, item[key]) === undefined &&
+                Find(list, "id", item.id) === undefined
+            ) {
                 list.push(item);
             }
         }
