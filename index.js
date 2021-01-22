@@ -39,7 +39,7 @@ async function Start(mode, namePrefix) {
     return data;
 }
 
-async function NormalMode(data) {
+async function CreateCSV(data, name = "image") {
     const resultData = [];
     const directory = {
         produce: "images/content/idols/name/",
@@ -56,7 +56,7 @@ async function NormalMode(data) {
         ]);
     }
 
-    await writeFile("image.csv", Papa.unparse(resultData));
+    await writeFile(`${name}.csv`, Papa.unparse(resultData));
 }
 
 async function GenerateImage(data, name = "", directory = "result") {
@@ -156,7 +156,7 @@ function ProcessLog(mode) {
     switch (mode) {
         case "normal":
             const data = await Start("normal", namePrefix);
-            await NormalMode(data);
+            await CreateCSV(data);
             break;
         case "simple":
             await Start("simple", "");
