@@ -20,21 +20,9 @@ let doneCount = 0;
 
 let timerID = 0;
 
-async function Start(mode, prefix, directory = "result") {
-    const data = await ReadCSV(`data-${mode}.csv`);
-
-    await MakeDirectory(directory);
-
-    StartLog(mode, data.length);
-    await GenerateImage(data, prefix, directory);
-    EndLog();
-
-    return data;
-}
-
 async function GetUpdateData() {
-    const oldData = await ReadCSV(`data-old.csv`);
-    const newData = await ReadCSV(`data-normal.csv`);
+    const oldData = await ReadCSV(`data-normal.csv`);
+    const newData = await ReadCSV(`data-update.csv`);
 
     const image = [];
     const csv = [];
@@ -64,7 +52,7 @@ async function GetUpdateData() {
     return { image, csv, newData };
 }
 
-async function CreateTranslationCSV(data, prefix, name = "image") {
+async function CreateTranslationCSV(data, prefix, name) {
     const directory = {
         produce: "images/content/idols/name/",
         support: "images/content/support_idols/name/"
@@ -82,7 +70,7 @@ async function CreateTranslationCSV(data, prefix, name = "image") {
     );
 }
 
-async function GenerateImage(data, name = "", directory) {
+async function GenerateImage(data, name, directory) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -202,7 +190,24 @@ function Capitalize(text) {
 
 (async function () {
     const mode = process.env.MODE;
-    const prefix = "card_name_";
+    const setting = {
+        normal: {
+            prefix: "card_name_",
+            directory: "result",
+            csvFileName: "image"
+        },
+        simple: {
+            prefix: "",
+            directory: "result",
+            csvFileName: ""
+        },
+        update: {
+            prefix: "card_name_",
+            directory: "result_update",
+            csvFileName: "image-update"
+        }
+    }[mode];
+    let csv, image, newData;
 
     if (mode === undefined) {
         console.error(
@@ -216,25 +221,30 @@ function Capitalize(text) {
 
     switch (mode) {
         case "normal":
-            const data = await Start("normal", prefix);
-            await CreateTranslationCSV(data, prefix);
+            image = csv = await ReadCSV(`data-normal.csv`);
             break;
         case "simple":
-            await Start("simple", "");
+            image = await ReadCSV(`data-simple.csv`);
             break;
         case "update":
-            let { image, csv, newData } = await GetUpdateData();
-
-            await MakeDirectory("result_update");
-
-            StartLog(mode, image.length);
-            await GenerateImage(image, prefix, "result_update");
-            EndLog();
-
-            await CreateTranslationCSV(csv, prefix, "image_update");
-            await WriteCSV("data-old", newData);
-
+            ({ image, csv, newData } = await GetUpdateData());
             break;
+    }
+
+    if (image) {
+        await MakeDirectory(setting.directory);
+
+        StartLog(mode, image.length);
+        await GenerateImage(image, setting.prefix, setting.directory);
+        EndLog();
+    }
+
+    if (csv) {
+        await CreateTranslationCSV(csv, setting.prefix, setting.csvFileName);
+    }
+
+    if (newData) {
+        await WriteCSV("data-normal", newData);
     }
 
     console.log(chalk.green("Complete! Check the 'result' directory."));
