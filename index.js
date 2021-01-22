@@ -58,8 +58,6 @@ async function Start(mode, namePrefix) {
 
         await writeFile("image.csv", Papa.unparse(resultData));
     }
-
-    console.log(chalk.green("Complete! Check the 'result' directory."));
 }
 
 async function GenerateImageList(data, name) {
@@ -164,6 +162,8 @@ function ProcessLog(mode) {
             break;
         default:
             console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
-            break;
+            return;
     }
+
+    console.log(chalk.green("Complete! Check the 'result' directory."));
 })();
