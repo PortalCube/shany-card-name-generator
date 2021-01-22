@@ -88,7 +88,7 @@ async function GenerateImage(data, name = "", directory) {
 
 function ProcessLog(mode) {
     return () => {
-        const percent = doneCount / totalCount;
+        const percent = totalCount === 0 ? 0 : doneCount / totalCount;
         const percentString = (percent * 100).toLocaleString("en-US", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
