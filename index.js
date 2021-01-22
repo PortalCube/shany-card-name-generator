@@ -39,24 +39,22 @@ async function Start(mode, namePrefix) {
     return data;
 }
 
-async function CreateCSV(data, name = "image") {
-    const resultData = [];
+async function CreateCSV(data, prefix, name = "image") {
+    const result = [];
     const directory = {
         produce: "images/content/idols/name/",
         support: "images/content/support_idols/name/"
     };
 
-    console.log(chalk.blueBright("Create image.csv..."));
+    console.log(chalk.blueBright(`Create ${name}.csv...`));
 
-    for (let item of data) {
-        resultData.push([
-            `${directory[item.type]}${item.hash}_${item.id}.png`,
-            `${namePrefix}${item.id}.png`,
-            item.version
-        ]);
-    }
+    result = data.map((item) => [
+        `${directory[item.type]}${item.hash}_${item.id}.png`,
+        `${prefix}${item.id}.png`,
+        item.version
+    ]);
 
-    await writeFile(`${name}.csv`, Papa.unparse(resultData));
+    await writeFile(`${name}.csv`, Papa.unparse(result));
 }
 
 async function GenerateImage(data, name = "", directory = "result") {
@@ -145,7 +143,7 @@ function ProcessLog(mode) {
 
 (async function () {
     const mode = process.env.MODE;
-    const namePrefix = "card_name_";
+    const prefix = "card_name_";
 
     if (mode === undefined) {
         console.error(
@@ -155,14 +153,14 @@ function ProcessLog(mode) {
 
     switch (mode) {
         case "normal":
-            const data = await Start("normal", namePrefix);
-            await CreateCSV(data);
+            const data = await Start("normal", prefix);
+            await CreateCSV(data, prefix);
             break;
         case "simple":
             await Start("simple", "");
             break;
         case "update":
-            await Start("update", namePrefix);
+            await Start("update", prefix);
             break;
         default:
             console.error(chalk.bgRed(`ERROR: Unknown command "${mode}"`));
