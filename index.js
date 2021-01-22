@@ -16,27 +16,31 @@ let latestFiles = [];
 let totalCount = 0;
 let doneCount = 0;
 
-async function Start(mode, namePrefix) {
+async function Start(mode, preifx, directory = "result") {
     const rawData = await readFile(`data-${mode}.csv`, { encoding: "utf8" });
     const data = Papa.parse(rawData, { header: true }).data;
     const timer = setInterval(ProcessLog(mode), 16);
 
-    try {
-        await mkdir("./result");
-    } catch (err) {
-        if (err.code !== "EEXIST") throw err;
-    }
+    await MakeDirectory(directory);
 
     totalCount = data.length;
     latestFiles.length = 10;
     latestFiles.fill("");
 
-    await GenerateImage(data, namePrefix);
+    await GenerateImage(data, preifx, directory);
 
     clearInterval(timer);
     logUpdate.done();
 
     return data;
+}
+
+async function MakeDirectory(directory) {
+    try {
+        await mkdir(`./${directory}`);
+    } catch (err) {
+        if (err.code !== "EEXIST") throw err;
+    }
 }
 
 async function CreateCSV(data, prefix, name = "image") {
@@ -57,7 +61,7 @@ async function CreateCSV(data, prefix, name = "image") {
     await writeFile(`${name}.csv`, Papa.unparse(result));
 }
 
-async function GenerateImage(data, name = "", directory = "result") {
+async function GenerateImage(data, name = "", directory) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
