@@ -13,7 +13,7 @@ Node.js에서 puppeteer의 스크린샷 캡쳐 기능을 활용하여, CSS와 SV
 
 1. Node.js가 없다면 설치합니다. https://nodejs.org/en/
 1. 저장소를 다운로드합니다.
-1. 저장소 디렉토리 (index.js가 있는 곳) 에서 터미널을 열고 "npm i" 커맨드를 이용해서 모든 패키지를 설치합니다.
+1. 저장소 디렉토리 (index.js가 있는 곳) 에서 터미널을 열고 "npm install" 커맨드를 이용해서 모든 패키지를 설치합니다.
 1. 고산자체가 없다면 설치합니다: http://map.ngii.go.kr/mi/emapMain/emapIntro01.do
 1. 나눔 고딕이 없다면 설치합니다: https://hangeul.naver.com/2017/nanum
 
@@ -24,7 +24,7 @@ Node.js에서 puppeteer의 스크린샷 캡쳐 기능을 활용하여, CSS와 SV
 
 1. data-normal.csv 파일을 필요한대로 수정합니다.
 1. 수정이 완료되면 "npm run normal"를 입력하여 이미지를 Normal 모드로 빌드합니다.
-1. 빌드가 완료되면 result 폴더에 생성된 이미지들이 저장됩니다. image.csv에는 번역 서버에 추가해야될 텍스트가 저장됩니다.
+1. 빌드가 완료되면 result-normal 폴더에 생성된 이미지들이 저장됩니다. image.csv에는 번역 서버에 추가해야될 텍스트가 저장됩니다.
 
 ### Simple Build
 
@@ -33,7 +33,18 @@ Node.js에서 puppeteer의 스크린샷 캡쳐 기능을 활용하여, CSS와 SV
 
 1. data-simple.csv 파일을 필요한대로 수정합니다.
 1. 수정이 완료되면 "npm run simple"을 입력하여 이미지를 Simple 모드로 빌드합니다.
-1. 빌드가 완료되면 result 폴더에 생성된 이미지들이 저장됩니다.
+1. 빌드가 완료되면 result-simple 폴더에 생성된 이미지들이 저장됩니다.
+
+### Update Build
+
+업데이트 모드는 오래된 카드 데이터와 새로운 카드 데이터를 대조하여, 새로운 변동사항에 대한 이미지 및 image.csv만 생성하는 모드입니다.
+
+1. data-normal.csv에 오래된 카드 데이터를 저장합니다.
+1. data-update.csv에 새롭게 업데이트된 카드 데이터를 저장합니다.
+1. 수정이 완료되면 "npm run update"를 입력하여 이미지를 Update 모드로 빌드합니다.
+1. 빌드가 완료되면 result-update 폴더에 변동사항이 있는 이미지들이 저장되며, image-update.csv에는 변동사항이 있는 image.csv가 저장됩니다.
+
+추가로, Update 모드를 사용하면 data-normal.csv는 data-update.csv 파일로 덮어씌워집니다.
 
 ## CSV 형식
 
@@ -65,6 +76,10 @@ id,rarity,idol_name,card_name
     -   1: N, 2: R, 3: SR, 4: SSR
 -   idol_name: 아이돌 이름 (이미지 생성에 사용)
 -   card_name: 카드 이름 (이미지 생성에 사용)
+
+### data-update.csv
+
+data-normal.csv와 형식이 동일합니다.
 
 # 저작권
 
