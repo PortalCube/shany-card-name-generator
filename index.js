@@ -41,9 +41,12 @@ async function GetUpdateData() {
 
     for (let item of newData) {
         for (let [key, list] of updateInfoList) {
+            const oldItem = Find(oldData, "id", item.id);
+            const listItem = Find(list, "id", item.id);
+
             if (
-                Find(oldData, key, item[key]) === undefined &&
-                Find(list, "id", item.id) === undefined
+                listItem === undefined &&
+                (oldItem === undefined || oldItem[key] !== item[key])
             ) {
                 list.push(item);
             }
