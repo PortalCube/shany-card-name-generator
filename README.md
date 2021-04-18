@@ -46,6 +46,11 @@ Node.js에서 puppeteer의 스크린샷 캡쳐 기능을 활용하여, CSS와 SV
 
 추가로, Update 모드를 사용하면 data-normal.csv는 data-update.csv 파일로 덮어씌워집니다.
 
+
+### Note
+
+만일 npm run simple, npm run normal 등의 커맨드가 "'cross-env'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다."라는 오류를 표시하는 경우, "npm i cross-env -g" 명령을 실행하면 해결됩니다.
+
 ## CSV 형식
 
 각 파일의 예시는 저장소에 첨부된 파일을 참고해주세요.
