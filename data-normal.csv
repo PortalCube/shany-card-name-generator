@@ -1,6 +1,6 @@
 id,hash,version,type,rarity,card_name_original,card_name,idol_name_original,idol_name
-1940010010,547d5c0d4b83b5e898d2e1b69d3f783d,2,produce,4,アイドルロード,アイドルロード,櫻木 真乃,櫻木 真乃
-1040010010,1209a8ef1f8e6a454b7e8df52952bc7f,7,produce,4,ほわっとスマイル,ほわっとスマイル,櫻木 真乃,櫻木 真乃
+1940010010,547d5c0d4b83b5e898d2e1b69d3f783d,2,produce,4,アイドルロード,아이돌 로드,櫻木 真乃,사쿠라기 마노
+1040010010,1209a8ef1f8e6a454b7e8df52952bc7f,7,produce,4,ほわっとスマイル,부드러운 스마일,櫻木 真乃,사쿠라기 마노
 1040010020,7f2b24447ba0de59a31bd000b8155529,4,produce,4,ハ♡トフェルトゥギフト,ハ♡トフェルトゥギフト,櫻木 真乃,櫻木 真乃
 1040010030,c0f9c2150837b2024c617c47ee7327ff,2,produce,4,はじけてスマイル,はじけてスマイル,櫻木 真乃,櫻木 真乃
 1040010040,61e066bde039f64b3ee8d644094ee63e,2,produce,4,深染め、いろみぐさ,深染め、いろみぐさ,櫻木 真乃,櫻木 真乃
@@ -431,3 +431,27 @@ id,hash,version,type,rarity,card_name_original,card_name,idol_name_original,idol
 1020230010,1b310782b368c7ced193285f2433c439,2,produce,2,白いツバサ,白いツバサ,市川 雛菜,市川 雛菜
 2040230010,2511e427c4763a8d913ab51f93f994dd,1,support,4,ROOKIE!,ROOKIE!,市川 雛菜,市川 雛菜
 2020230010,74b6a2d63ff731978321b67971988364,2,support,2,２８３プロのヒナ,２８３プロのヒナ,市川 雛菜,市川 雛菜
+1030120060,26a4ee5e3bd529f05f1aa4c8f7e02e16,1,produce,3,春告窓,봄을 고하는 창,杜野 凛世,모리노 린제
+1040180050,3ae3c6153f357a35b008246a203a41da,1,produce,4,multi-angle,multi-angle,黛 冬優子,마유즈미 후유코
+2040010110,cf5f418501999078e38e81eca6e60ce0,1,support,4,春日影、さんならび,"봄볕, 나란한 셋",櫻木 真乃,사쿠라기 마노
+2040160080,9250d7112fe38e33fc4d80c384c5d4d9,1,support,4,signal,signal,桑山 千雪,쿠와야마 치유키
+1040150070,2b096a875cd2646f801131d775f24332,1,produce,4,Feel Like Flower,Feel Like Flower,大崎 甜花,오사키 텐카
+2040220040,057cfc43d872376b46d6bab7bc18ab6a,1,support,4,はるとあめ,봄과 비,福丸 小糸,후쿠마루 코이토
+2040210040,78fea39cb4b814f4fa624584bf31a16b,1,support,4,射陽,사양(射陽),樋口 円香,히구치 마도카
+1030010060,6356b0a1f516a2cea614acc425cbad47,1,produce,3,ピックアップ・スプリング,픽업 스프링,櫻木 真乃,사쿠라기 마노
+1040110070,742b5821396271e81f6b836efb95c5d1,1,produce,4,花染む街で、君と,"꽃으로 물든 거리에서, 너와",西城 樹里,사이죠 쥬리
+2040180070,b6c10c8e7ec56a85156aa1e3c8e8712a,1,support,4,二律背反sweet,이율배반 sweet,黛 冬優子,마유즈미 후유코
+2030100050,73f15eff0eb02406935db8f5e4893623,1,support,3,NEON♥ICE,NEON♥ICE,園田 智代子,소노다 치요코
+1040010080,393e4d548c005ccca6e94f727424bbdd,1,produce,4,interStellar-Stella,interStellar-Stella,櫻木 真乃,사쿠라기 마노
+2040090070,617a013ed6aa25f9c7b00f570c6e7044,1,support,4,チルドレンモード！,칠드런 모드!,小宮 果穂,코미야 카호
+2030090050,677751d7e407095733b9f2d79e0be0b0,1,support,3,空は澄み、今を越えて。,"하늘은 맑고, 지금을 넘어서.",小宮 果穂,코미야 카호
+2030010050,756e463d94ee36aa9035066ccb72884c,1,support,3,空は澄み、今を越えて。,"하늘은 맑고, 지금을 넘어서.",櫻木 真乃,사쿠라기 마노
+2020040010,de1c3046a46c7c5f0f89358b160510c4,1,support,3,空は澄み、今を越えて。,"하늘은 맑고, 지금을 넘어서.",月岡 恋鐘,츠키오카 코가네
+2040240040,f59739e6995e27ebab4fecf9ba41258e,1,support,4,あっかい,빨갛다,七草 にちか,나나쿠사 니치카
+1040250030,ff9bde2f86e3b415c1f28befbb9d9984,1,produce,4,CONTRAIL,CONTRAIL,緋田 美琴,아케타 미코토
+2040140090,e562085b9bacbe4dd0202d4ba52aad0d,1,support,4,デビルたちの夜会☆,데빌들의 밤 연회☆,大崎 甘奈,오사키 아마나
+2030040050,d687cb938d83fe44da7e694d9c9a9dac,1,support,3,ばら色ハーモニー,장밋빛 하모니,月岡 恋鐘,츠키오카 코가네
+1040070070,c0a9b7bcc7de921bbb3fd236862ff71c,1,produce,4,kaleidoscope-pinball,kaleidoscope-pinball,三峰 結華,미츠미네 유이카
+2040130080,054265befed45a04bbba737bdfa0da02,1,support,4,ベリー・ストロベリー,베리 스트로베리,有栖川 夏葉,아리스가와 나츠하
+1030150060,a751ecb3ef88b57210a14bbdf3e43f22,1,produce,3,U♥DOLL,U♥DOLL,大崎 甜花,오사키 텐카
+1040240030,7d8fde579b1c85e1a44ec4aaa7df8226,1,produce,4,夜よこノ窓は塗らないデ,밤아 이 창은 칠하지 말아줘,七草 にちか,나나쿠사 니치카
