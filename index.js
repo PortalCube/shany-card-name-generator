@@ -139,7 +139,8 @@ function EndLog() {
 
 async function ReadCSV(file) {
     return Papa.parse(await fsPromises.readFile(file, { encoding: "utf8" }), {
-        header: true
+        header: true,
+        skipEmptyLines: true
     }).data;
 }
 
