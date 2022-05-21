@@ -46,21 +46,21 @@ jobs:
     - run: Compress-Archive -Path result-update -DestinationPath result-update.zip
       if: ${{ github.event_name == 'push' }}
     
-    - name: Automatic Release With Assets
+    - name: Create Release
       if: ${{ github.event_name == 'push' }}
       # You may pin to the exact commit or the version.
-      # uses: ianlapham/release-and-build@030426b9672f91f97f134a6e5463fbd2fe53d49f
-      uses: ianlapham/release-and-build@v1
+      # uses: ncipollo/release-action@58ae73b360456532aafd58ee170c045abbeaee37
+      uses: ncipollo/release-action@v1.10.0
       with:
-        # GitHub secret token
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        # Release title (for automatic releases)
-        title: Card Name Update
-        # Assets to upload to the release
-        files: |
+        # An optional set of paths representing artifacts to upload to the release. This may be a single path or a comma delimited list of paths (or globs)
+        artifacts: |
           result-update.zip
           image-update.csv
-    
+        # Indicates if the release body should be omitted.
+        omitBody: true
+        # Indicates if the release name should be omitted.
+        omitName: true
+
     - name: Auto commit data-normal.csv
       if: ${{ github.event_name == 'push' }}
       # You may pin to the exact commit or the version.
