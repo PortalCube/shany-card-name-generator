@@ -6,8 +6,12 @@ name: Build and Execute Update
 on:
   push:
     branches: [ main ]
+    paths:
+      - data-update.csv
   pull_request:
     branches: [ main ]
+    paths:
+      - data-update.csv
 
 jobs:
   build:
@@ -38,3 +42,34 @@ jobs:
           image-update.csv
           result-update/
         if-no-files-found: error
+        
+    - run: Compress-Archive -Path result-update -DestinationPath result-update.zip
+      if: ${{ github.event_name == 'push' }}
+    
+    - name: Automatic Release With Assets
+      if: ${{ github.event_name == 'push' }}
+      # You may pin to the exact commit or the version.
+      # uses: ianlapham/release-and-build@030426b9672f91f97f134a6e5463fbd2fe53d49f
+      uses: ianlapham/release-and-build@v1
+      with:
+        # GitHub secret token
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        # Release title (for automatic releases)
+        title: Card Name Update
+        # Assets to upload to the release
+        files: |
+          result-update.zip
+          image-update.csv
+    
+    - name: Auto commit data-normal.csv
+      if: ${{ github.event_name == 'push' }}
+      # You may pin to the exact commit or the version.
+      # uses: stefanzweifel/git-auto-commit-action@49620cd3ed21ee620a48530e81dba0d139c9cb80
+      uses: stefanzweifel/git-auto-commit-action@v4.14.1
+      with:
+        # Commit message
+        commit_message: Auto commit data-normal.csv
+        # File pattern used for `git add`. For example `src/*.js`
+        file_pattern: data-normal.csv
+        
+    
