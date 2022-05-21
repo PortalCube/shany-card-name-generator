@@ -1,10 +1,5 @@
 const path = require("path");
-const util = require("util");
-const fs = require("fs");
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-const rmdir = util.promisify(fs.rm);
-const mkdir = util.promisify(fs.mkdir);
+const fsPromises = require("fs/promises");
 const Papa = require("papaparse");
 const sharp = require("sharp");
 const puppeteer = require("puppeteer");
@@ -143,19 +138,19 @@ function EndLog() {
 }
 
 async function ReadCSV(file) {
-    return Papa.parse(await readFile(file, { encoding: "utf8" }), {
+    return Papa.parse(await fsPromises.readFile(file, { encoding: "utf8" }), {
         header: true
     }).data;
 }
 
 async function WriteCSV(file, data) {
-    await writeFile(`${file}.csv`, Papa.unparse(data));
+    await fsPromises.writeFile(`${file}.csv`, Papa.unparse(data));
 }
 
 async function MakeDirectory(directory) {
     try {
-        await rmdir(`./${directory}`, { recursive: true });
-        await mkdir(`./${directory}`);
+        await fsPromises.rm(`./${directory}`, { recursive: true, force: true });
+        await fsPromises.mkdir(`./${directory}`);
     } catch (err) {
         if (err.code !== "EEXIST") throw err;
     }
