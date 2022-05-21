@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy ByPass -NoProfile -Command "& '%~dp0install-fonts.ps1'"
