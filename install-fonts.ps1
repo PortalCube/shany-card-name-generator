@@ -6,4 +6,4 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 $fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
-Get-ChildItem -Recurse -include fonts/*.ttf | % { $fonts.CopyHere($_.fullname) }
+dir fonts/*.ttf | %{ $fonts.CopyHere($_.fullname) }
